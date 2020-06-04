@@ -1,0 +1,71 @@
+---
+title: "Chapter 2 Data Manipulation and Simple Calculations"
+output: html_notebook
+---
+
+### First, load the library
+
+```{r}
+library(GCDkit)
+```
+
+### Exercise 2.1: Subsetting a numeric vector, vector operations
+
+GCDkit contains several built-in datasets, normally needed just for correct system functioning. One of these is atomic weights, stored in the named vector mw. We will use it to show some simple vector operations.
+
+a) Display the whole vector. 
+```{r}
+mw
+```
+What is the atomic weight of Rb?
+```{r}
+mw['Rb']
+
+```
+b) What is the average value of the whole vector?
+```{r}
+mean(mw)
+```
+c) Which atoms have the atomic weight higher than 170?
+```{r}
+names(mw)[mw>170]
+```
+d) Display the names of six lightest and six heaviest elements in the dataset.
+```{r}
+sort(mw)[1:6]
+```
+```{r}
+rev(sort(mw))[1:6]
+```
+
+---
+
+### Excercise 2.2: Loading files, matrix/data frame manipulations
+
+The file sazava.data contains selected major- and trace-element analyses from the ~354 Ma old Sázava suite of the Central Bohemian Plutonic Complex (CBPC; Bohemian Massif, Czech Republic) (Janoušek et al. 2000, 2004).
+
+a) Read analyses stored in the tab-delimited data file into a data frame WR. 
+
+b) Find out the names of available variables (= column names).
+```{r}
+sazava <- read.table("../Janousek_et_al_2015_modelling_Springer/Part_1/Code/Data/sazava.data", sep="\t")
+print(colnames(sazava))
+```
+c) What is the MgO content of sample Sa-1?
+```{r}
+sazava["Sa-1","MgO"]
+```
+d) Show all available numeric data for samples Po-1 and Po-4.
+```{r}
+sazava <- sazava[,-(1:6)]
+sazava[c("Po-1","Po-4"),]
+```
+
+e) Calculate the total of the column “Na2O”.
+
+f) Display names of three samples with the lowest and the highest SiO2 contents.
+
+g) Calculate averages of all variables.
+
+h) Display a table with three columns: SiO2, MgO and Na2O/K2O.
+
