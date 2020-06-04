@@ -49,6 +49,7 @@ a) Read analyses stored in the tab-delimited data file into a data frame WR.
 b) Find out the names of available variables (= column names).
 ```{r}
 sazava <- read.table("../Janousek_et_al_2015_modelling_Springer/Part_1/Code/Data/sazava.data", sep="\t")
+sazava
 print(colnames(sazava))
 ```
 c) What is the MgO content of sample Sa-1?
@@ -60,12 +61,31 @@ d) Show all available numeric data for samples Po-1 and Po-4.
 sazava <- sazava[,-(1:6)]
 sazava[c("Po-1","Po-4"),]
 ```
-
 e) Calculate the total of the column “Na2O”.
+```{r}
+sum(sazava[,"Na2O"])
+```
 
 f) Display names of three samples with the lowest and the highest SiO2 contents.
+```{r}
+silica <- sazava[,"SiO2"]
+names(silica) <- rownames(sazava)
+print("Three samples with the lowest SiO2")
+names(sort(silica))[1:5]
+print("Three samples with the highest SiO2")
+names(rev(sort(silica)))[1:5]
+```
 
 g) Calculate averages of all variables.
-
+```{r}
+apply(sazava,2,mean,na.rm=TRUE)
+```
 h) Display a table with three columns: SiO2, MgO and Na2O/K2O.
+```{r}
+x <- cbind(sazava[,"SiO2"],sazava[,"MgO"],sazava[,"Na2O"]/sazava[,"K2O"])
+colnames(x) <- c("Sio2","MgO","Na2O/K2O")
+rownames(x) <- rownames(sazava)
+x
+```
+
 
