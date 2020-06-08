@@ -1,11 +1,15 @@
 ---
 title: "Chapter 2 Data Manipulation and Simple Calculations"
-output: html_notebook
+output:
+  html_document:
+    df_print: paged
 ---
+
+[Return to Main page](../index.html)
 
 ### First, load the library
 
-```{r}
+```{r results="hide"}
 library(GCDkit)
 ```
 
@@ -211,5 +215,35 @@ c) Using the function by, print basic statistical summaries for major-element ox
 ```{r}
 by(sazava[,7:17],list(Rock=intrusion),summary)
 ```
+### Excercise 2.7: Classification using factors
+Classify samples in the Sázava set according to SiO2 contents (wt. %) in four groups, U (< 45), B (45–52), I (52–63) and A (> 63).
+```{r}
+sazava <- read.table("../Janousek_et_al_2015_modelling_Springer/Part_1/Code/Data/sazava.data", sep="\t")
+silica <- cut(sazava[,"SiO2"],breaks=c(0,45,52,63,100),
+              labels=c("U","B","I","A"))
+silica
+```
+```{r}
+acidity <- as.vector(silica)
+names(acidity) <- rownames(sazava)
+acidity
+```
+### Exercise 2.8: Frequency tables
+a) Using the factor *intrusion*, count the number of analyses obtained from each of the rock groups in the Sazava dataset.
 
+```{r}
+data(sazava)
+intrusion <- factor(sazava[,"Intrusion"])
+table(intrusion)
+```
+b) Analously, count the number of ultrabasic, basic, intermediate and acid rocks (factor *silica* from the previous exercise)
+```{r}
+table(silica)
+```
+c) Set up a frequency table showing the depencedence of silica on the rock type.
+```{r}
+table(intrusion, silica)
+```
 
+### Note:
+Quite an amazing chapter, onward to chapter 3!
